@@ -1,4 +1,5 @@
 import { CryptoHasher } from 'bun';
+import { calculateMerkleRoot } from './merkle';
 
 export class Block {
   private index: number;
@@ -16,8 +17,12 @@ export class Block {
     this.hash = this.calculateHash();
   }
 
+  private getMerkleRoot() {
+    return calculateMerkleRoot(this.transactions);
+  }
+
   public calculateHash() {
-    const datos = `${this.index}${this.timestamp}${this.transactions}${this.prevHash}${this.nonce}`;
+    const datos = `${this.index}${this.timestamp}${this.prevHash}${this.getMerkleRoot()}${this.nonce}`;
     return new CryptoHasher('sha256').update(datos).digest('hex');
   }
 }
