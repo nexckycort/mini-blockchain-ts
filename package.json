@@ -1,12 +1,15 @@
 {
   "name": "mini-blockchain-ts",
   "scripts": {
+    "check": "biome check --write",
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
     "hono": "^4.9.6"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@biomejs/biome": "^2.2.3",
+    "@types/bun": "latest",
+    "typescript": "^5.9.2"
   }
 }
