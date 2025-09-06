@@ -3,10 +3,10 @@ import { CryptoHasher } from 'bun';
 export class Block {
   private index: number;
   private timestamp: number;
-  private transactions: string[];
-  private prevHash: string;
+  public transactions: string[];
+  public prevHash: string;
   private nonce = 0;
-  private hash: string;
+  public hash: string;
 
   constructor(index: number, transactions: string[], prevHash: string) {
     this.index = index;
@@ -16,7 +16,7 @@ export class Block {
     this.hash = this.calculateHash();
   }
 
-  private calculateHash() {
+  public calculateHash() {
     const datos = `${this.index}${this.timestamp}${this.transactions}${this.prevHash}${this.nonce}`;
     return new CryptoHasher('sha256').update(datos).digest('hex');
   }
