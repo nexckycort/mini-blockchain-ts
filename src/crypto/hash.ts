@@ -1,6 +1,7 @@
 import { CryptoHasher } from 'bun';
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export function hashTransaction(value: any) {
+import type { TransactionData } from '../wallet/transaction';
+
+export function hashTransaction(value: TransactionData) {
   return new CryptoHasher('sha256').update(JSON.stringify(value)).digest('hex');
 }
