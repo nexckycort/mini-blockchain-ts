@@ -1,8 +1,9 @@
 import { Database } from 'bun:sqlite';
 
+import { DB_PATH } from '../config/env';
 import { Block, type BlockData } from '../core/block';
 
-const db = new Database('db/db.sqlite');
+const db = new Database(DB_PATH);
 
 function initStorage(): void {
   db.query(`CREATE TABLE IF NOT EXISTS blocks (
