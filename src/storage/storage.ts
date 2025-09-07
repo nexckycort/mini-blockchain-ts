@@ -50,3 +50,7 @@ export function loadBlockchain(): Block[] {
 
   return blocks;
 }
+
+export function clearDatabase(): void {
+  db.query('DELETE FROM blocks').run();
+}

@@ -1,8 +1,12 @@
-import { describe, expect, it } from 'bun:test';
-
+import { afterAll, describe, expect, it } from 'bun:test';
+import { clearDatabase } from '../storage/storage';
 import { Blockchain } from './blockchain';
 
 describe('Blockchain', () => {
+  afterAll(() => {
+    clearDatabase();
+  });
+
   it('should create genesis block', () => {
     const chain = new Blockchain();
 

@@ -3,7 +3,8 @@
   "scripts": {
     "check": "biome check --write",
     "dev": "bun run --hot src/index.ts",
-    "test": "bun test"
+    "test": "bun test",
+    "test:watch": "bun test --watch"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.2",
