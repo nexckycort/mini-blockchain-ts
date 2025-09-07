@@ -5,11 +5,13 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
+    "elliptic": "^6.6.1",
     "hono": "^4.9.6"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.3",
     "@types/bun": "latest",
+    "@types/elliptic": "^6.4.18",
     "typescript": "^5.9.2"
   }
 }
