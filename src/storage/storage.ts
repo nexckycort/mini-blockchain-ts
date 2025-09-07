@@ -4,7 +4,7 @@ import { Block, type BlockData } from '../core/block';
 
 const db = new Database('db/db.sqlite');
 
-export function initStorage(): void {
+function initStorage(): void {
   db.query(`CREATE TABLE IF NOT EXISTS blocks (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   idx INTEGER NOT NULL,
@@ -13,8 +13,13 @@ export function initStorage(): void {
   prevHash TEXT NOT NULL,
   hash TEXT NOT NULL UNIQUE,
   nonce INTEGER NOT NULL
-);`).run('PRAGMA journal_mode = WAL;');
+);`).run();
+
+  db.query('PRAGMA journal_mode = WAL;').run();
 }
+
+// Initialize database when module loads
+initStorage();
 
 export function saveBlock(block: BlockData): void {
   db.query(`INSERT INTO blocks (idx, timestamp, data, prevHash, hash, nonce)
@@ -29,15 +34,18 @@ VALUES (?, ?, ?, ?, ?, ?);`).run(
 }
 
 export function loadBlockchain(): Block[] {
-  const query = db.query('SELECT * FROM blocks ORDER BY idx ASC').as(Block);
-  const blocks = query.all();
-  return blocks.map((block) => {
-    // @ts-expect-error
-    const transactions = JSON.parse(block.data);
-    Reflect.deleteProperty(block, 'data');
-    return {
-      ...block,
-      transactions,
-    } as Block;
+  const query = db.query<BlockData, any>(
+    'SELECT * FROM blocks ORDER BY idx ASC',
+  );
+  const rows = query.all();
+
+  const blocks = rows.map((row) => {
+    const transactions = JSON.parse(row.data);
+    const block = new Block(row.idx, transactions, row.prevHash);
+    block.hash = row.hash;
+    block.timestamp = row.timestamp;
+    return block;
   });
+
+  return blocks;
 }
