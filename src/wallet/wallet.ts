@@ -33,12 +33,13 @@ export class Wallet {
     return transaction.signature;
   }
 
-  public verifySignature(transaction: Transaction): boolean {
+  public static verifySignature(transaction: Transaction): boolean {
+    if (!transaction.signature) return false;
+    if (transaction.from === 'GENESIS') return true;
+
     const txHash = transaction.hash();
     const signatureHex = transaction.signature;
-    if (!signatureHex) throw new Error('Transaction has no signature');
-
-    const key = ec.keyFromPublic(this.publicKey, 'hex');
+    const key = ec.keyFromPublic(transaction.from, 'hex');
     return key.verify(txHash, signatureHex);
   }
 }

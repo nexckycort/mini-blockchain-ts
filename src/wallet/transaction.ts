@@ -1,4 +1,8 @@
+import { ec as EC } from 'elliptic';
+
 import { hashTransaction } from '../crypto/hash';
+
+const ec = new EC('secp256k1');
 
 export class Transaction {
   public from: string;
@@ -19,5 +23,14 @@ export class Transaction {
       to: this.to,
       amount: this.amount,
     });
+  }
+
+  public isValid():boolean {
+    if (this.from === 'GENESIS') return true;
+    if (!this.signature) return false;
+
+    const txHash = this.hash();
+    const key = ec.keyFromPublic(this.from, 'hex');
+    return key.verify(txHash, this.signature);
   }
 }

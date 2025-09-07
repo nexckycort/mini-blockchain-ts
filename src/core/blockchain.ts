@@ -18,6 +18,12 @@ export class Blockchain {
   }
 
   public addBlock(transactions: Transaction[]): Block {
+    for (const tx of transactions) {
+      if (!tx.isValid()) {
+        throw new Error('Block rejected: invalid transaction found');
+      }
+    }
+
     const newBlock = new Block(
       this.chain.length,
       transactions,
