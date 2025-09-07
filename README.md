@@ -2,6 +2,10 @@
 
 An educational implementation of a blockchain in TypeScript to understand the fundamental concepts of this technology.
 
+## 🚨 Project Status
+
+> **⚠️ EDUCATIONAL PROJECT IN DEVELOPMENT** 
+
 ## What is this project?
 
 This project is a simplified blockchain that demonstrates the core concepts of:
@@ -12,47 +16,95 @@ This project is a simplified blockchain that demonstrates the core concepts of:
 * **Wallets** for managing public/private keys
 * **Basic consensus** via signature validation
 
-## Features
+## 📋 Implementation Status
 
-✅ **Blockchain Core**
+> **Note**: This is a learning project. All features, implementations, and architecture may evolve and change as I continue learning and improving my understanding of blockchain concepts.
 
-* Automatic creation of the genesis block
-* Secure chaining using SHA-256 hashes
-* Full chain validation
+### ✅ **Completed Features**
 
-✅ **Transaction System**
+**🏗️ Core Blockchain**
+- ✅ Block structure with SHA-256 hashing (`src/core/block.ts`)
+- ✅ Blockchain with genesis and `addBlock()` functionality (`src/core/blockchain.ts`)
+- ✅ Complete Merkle Tree implementation (`src/core/merkle.ts`)
+- ✅ Chain integrity validation and verification
 
-* Digital signatures with secp256k1
-* Automatic transaction validation
-* Prevention of post-signature tampering
+**🔐 Cryptography & Wallets**
+- ✅ Complete transaction system (`src/wallet/transaction.ts`)
+- ✅ Wallet with key generation (`src/wallet/wallet.ts`)
+- ✅ Digital signatures with secp256k1
+- ✅ Signature verification implemented
 
-✅ **Cryptographic Wallets**
+**💾 Data Persistence**
+- ✅ SQLite storage implemented (`src/storage/storage.ts`)
+- ✅ `saveBlock()` and `loadBlockchain()` functions
+- ✅ Automatic persistence between executions
+- ✅ Structured database schema
 
-* Secure generation of private/public keys
-* Transaction signing and verification
-* Compatibility with cryptographic standards
+**🧪 Development Tools**
+- ✅ Basic testing with Bun test framework
+- ✅ Hot reload development server
+- ✅ Biome linting and formatting
 
-✅ **Merkle Tree**
+### 🚧 **In Development**
 
-* Per-block transaction integrity
-* Efficient verification without downloading the entire block
+**🌐 REST API**
+- ⚠️ HTTP server with Hono framework (`src/network/node.ts`)
+- ⚠️ `GET /blocks` - Retrieve complete blockchain
+- ⚠️ `POST /tx` - Submit transactions
+- ❌ `GET /mempool` - View pending transactions
+- ❌ `POST /mine` - Start mining process
+- ❌ `GET /mine/status/{jobId}` - Check mining status (async)
 
-🚧 **P2P Network** (Work in progress)
+### ❌ **Pending Features**
 
-* Node-to-node communication
-* Blockchain synchronization
+**🔗 P2P Networking**
+- [ ] Basic structure created (`src/network/p2p.ts`)
+- [ ] WebSocket implementation pending
+- [ ] P2P message protocol pending
+- [ ] Peer discovery system pending
 
-## Architecture
+**🤝 Distributed Consensus**
+- [ ] Complete Proof-of-Work algorithm
+- [ ] Node synchronization
+- [ ] Fork conflict resolution
+- [ ] Remote chain validation
+
+**📊 Advanced Functionality**
+- [ ] Mempool with fee prioritization
+- [ ] Dynamic fee system
+- [ ] Optimized balance caching
+- [ ] Interactive web explorer
+- [ ] SPV (Simple Payment Verification) implementation
+
+**🔒 Security & Production**
+- [ ] Rate limiting for APIs
+- [ ] Authentication system
+- [ ] Deterministic serialization
+- [ ] Complete balance validation in APIs
+- [ ] Security audit implementation
+
+## 🏗️ Architecture
 
 ```
 src/
-├── core/              # Core blockchain logic
-│   ├── blockchain.ts  # Chain management
-│   ├── block.ts       # Block implementation
-│   └── merkle.ts      # Merkle trees
-├── wallet/            # Transaction system
-│   ├── wallet.ts      # Wallets and signing
-│   └── transaction.ts # Transactions
-├── crypto/            # Cryptographic utilities
-└── network/           # P2P network (in development)
+├── core/           # Core blockchain logic
+│   ├── blockchain.ts   # Main blockchain class with chain management
+│   ├── block.ts        # Block class with hash calculation
+│   └── merkle.ts       # Merkle tree implementation
+├── wallet/         # Transaction and wallet management
+│   ├── wallet.ts       # Wallet class with key generation
+│   └── transaction.ts  # Transaction class with signature validation
+├── storage/        # Data persistence
+│   └── storage.ts      # SQLite functions for blocks
+├── network/        # Networking and REST API
+│   ├── routes/         # HTTP endpoints
+│   │   ├── blocks.ts     # GET /blocks
+│   │   ├── transactions.ts # POST /tx
+│   │   ├── mempool.ts    # GET /mempool
+│   │   └── mining.ts     # POST /mine, GET /mine/status
+│   └── p2p.ts          # P2P (in development)
+├── state/          # Global state
+│   └── singleton.ts    # Shared blockchain instance
+└── crypto/         # Cryptographic utilities
+    └── hash.ts         # Hashing functions
 ```
