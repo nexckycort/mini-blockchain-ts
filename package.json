@@ -2,7 +2,8 @@
   "name": "mini-blockchain-ts",
   "scripts": {
     "check": "biome check --write",
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "test": "bun test"
   },
   "dependencies": {
     "elliptic": "^6.6.1",

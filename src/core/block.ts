@@ -26,7 +26,7 @@ export class Block {
   }
 
   public calculateHash() {
-    const datos = `${this.index}${this.timestamp}${this.prevHash}${this.getMerkleRoot()}${this.nonce}`;
-    return new CryptoHasher('sha256').update(datos).digest('hex');
+    const data = `${this.index}${this.timestamp}${this.prevHash}${this.getMerkleRoot()}${this.nonce}`;
+    return new CryptoHasher('sha256').update(data).digest('hex');
   }
 }
