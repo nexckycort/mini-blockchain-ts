@@ -1,4 +1,4 @@
-import { hashTransaction } from '../crypto/hash';
+import { hash, hashTransaction } from '../crypto/hash';
 import type { Transaction } from '../wallet/transaction';
 
 export function calculateMerkleRoot(transactions: Transaction[]) {
@@ -10,7 +10,7 @@ export function calculateMerkleRoot(transactions: Transaction[]) {
       const left = leafHashes[i];
       const right = leafHashes[i + 1] ?? left;
 
-      const combinedHash = hashTransaction(left + right);
+      const combinedHash = hash(left + right);
       parentHashes.push(combinedHash);
     }
 
