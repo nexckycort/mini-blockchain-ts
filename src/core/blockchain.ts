@@ -1,3 +1,4 @@
+import { loadBlockchain, saveBlock } from '../storage/storage';
 import { Transaction } from '../wallet/transaction';
 import { Block } from './block';
 
@@ -5,12 +6,19 @@ export class Blockchain {
   public chain: Block[];
 
   constructor() {
-    this.chain = [this.createGenesisBlock()];
+    this.chain = this.initializeChain();
+  }
+
+  private initializeChain() {
+    const storedChain = loadBlockchain();
+    return storedChain.length > 0 ? storedChain : [this.createGenesisBlock()];
   }
 
   private createGenesisBlock(): Block {
     const genesisTransaction = new Transaction('GENESIS', 'GENESIS', 0);
-    return new Block(0, [genesisTransaction], '0');
+    const genesis = new Block(0, [genesisTransaction], '0');
+    saveBlock(genesis.toJSON());
+    return genesis;
   }
 
   private getLatestBlock(): Block {
@@ -30,6 +38,8 @@ export class Blockchain {
       this.getLatestBlock().hash,
     );
     this.chain.push(newBlock);
+    saveBlock(newBlock.toJSON());
+
     return newBlock;
   }
 
