@@ -1,9 +1,11 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono';
 
-const app = new Hono()
+import routes from './network/node';
+import { initStorage } from './storage/storage';
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+initStorage();
 
-export default app
+const app = new Hono();
+app.route('/', routes);
+
+export default app;
