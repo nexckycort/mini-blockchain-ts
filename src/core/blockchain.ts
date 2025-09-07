@@ -1,3 +1,4 @@
+import { Transaction } from '../wallet/transaction';
 import { Block } from './block';
 
 export class Blockchain {
@@ -7,15 +8,16 @@ export class Blockchain {
     this.chain = [this.createGenesisBlock()];
   }
 
-  private createGenesisBlock() {
-    return new Block(0, ['Genesis block'], '0');
+  private createGenesisBlock(): Block {
+    const genesisTransaction = new Transaction('GENESIS', 'GENESIS', 0);
+    return new Block(0, [genesisTransaction], '0');
   }
 
-  private getLatestBlock() {
+  private getLatestBlock(): Block {
     return this.chain[this.chain.length - 1];
   }
 
-  public addBlock(transactions: string[]) {
+  public addBlock(transactions: Transaction[]): Block {
     const newBlock = new Block(
       this.chain.length,
       transactions,
@@ -25,7 +27,7 @@ export class Blockchain {
     return newBlock;
   }
 
-  public isValid() {
+  public isValid(): boolean {
     for (let i = 1; i < this.chain.length; i++) {
       const curr = this.chain[i];
       const prev = this.chain[i - 1];

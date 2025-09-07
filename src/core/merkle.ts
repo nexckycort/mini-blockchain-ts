@@ -1,6 +1,7 @@
 import { hashTransaction } from '../crypto/hash';
+import type { Transaction } from '../wallet/transaction';
 
-export function calculateMerkleRoot(transactions: string[]) {
+export function calculateMerkleRoot(transactions: Transaction[]) {
   let leafHashes = transactions.map((tx) => hashTransaction(tx));
 
   while (leafHashes.length > 1) {
