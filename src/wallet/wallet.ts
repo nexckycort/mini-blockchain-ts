@@ -1,4 +1,3 @@
-import { CryptoHasher } from 'bun';
 import { ec as EC } from 'elliptic';
 
 import type { Transaction } from './transaction';
@@ -17,7 +16,9 @@ export class Wallet {
   private generatePrivateKey(): string {
     const array = new Uint8Array(32);
     crypto.getRandomValues(array);
-    return new CryptoHasher('sha256').update(array).digest('hex');
+    return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join(
+      '',
+    );
   }
 
   private derivePublicKey(privateKey: string): string {

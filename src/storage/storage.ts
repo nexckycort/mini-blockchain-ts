@@ -45,6 +45,7 @@ export function loadBlockchain(): Block[] {
     const block = new Block(row.idx, transactions, row.prevHash);
     block.hash = row.hash;
     block.timestamp = row.timestamp;
+    block.nonce = row.nonce;
     return block;
   });
 
