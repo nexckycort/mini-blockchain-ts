@@ -61,30 +61,26 @@ This project is a simplified blockchain that demonstrates the core concepts of:
 
 ### 🚧 **In Development**
 
-**🌐 REST API - Advanced Features**
-- ❌ `GET /mine/status/{jobId}` - Check mining status (async mining)
-- ❌ **Advanced error handling** and consistent API responses
-- ❌ **Rate limiting** and request validation improvements
+**🔗 P2P Networking - Integration**
+- ✅ **TCP socket infrastructure** implemented (`src/network/p2p.ts`, `src/network/connection.ts`)
+- ✅ **Message protocol** defined (`src/network/messages.ts`)
+- ✅ **P2PNode class** with peer management and broadcasting
+- ❌ **REST API integration** - Automatic broadcasting of new blocks/transactions
+- ❌ **P2P testing** - Multi-node communication validation
 
 **🧪 Testing Coverage**
 - ❌ **Unit tests for Wallet/Transaction** - Dedicated test suites
 - ❌ **API integration tests** - Test REST endpoints with real requests
+- ❌ **P2P integration tests** - Multi-node communication testing
 - ❌ **End-to-end tests** - Complete workflow validation
 
 ### ❌ **Pending Features**
 
-**🔗 P2P Networking**
-- [ ] **Empty implementation** - Only basic file structure (`src/network/p2p.ts`)
-- [ ] WebSocket implementation needed
-- [ ] P2P message protocol design pending
-- [ ] Peer discovery system pending
-- [ ] Node synchronization pending
-
-**🤝 Distributed Consensus**
-- [ ] Node synchronization and chain comparison
-- [ ] Fork conflict resolution
-- [ ] Remote chain validation
-- [ ] Consensus algorithm for multiple nodes
+**🔗 P2P Networking - Advanced Features**
+- [ ] **Chain synchronization** between distributed nodes
+- [ ] **Peer discovery** system for automatic network building
+- [ ] **Fork resolution** and consensus algorithm
+- [ ] **Authentication** and handshake protocol
 
 
 ## 🏗️ Architecture
@@ -101,13 +97,14 @@ src/
 │   └── mining.test.ts         # Proof-of-Work mining tests
 ├── config/                 # Configuration management
 │   ├── env.ts                 # Environment configuration
-│   └── mining.ts              # Mining difficulty and PoW config
+│   ├── mining.ts              # Mining difficulty and PoW config
+│   └── p2p.ts                 # P2P networking configuration
 ├── wallet/                 # Transaction and wallet management
 │   ├── wallet.ts              # Wallet with secp256k1 key generation
 │   └── transaction.ts         # Signed transactions with validation
 ├── storage/                # Data persistence layer
 │   └── storage.ts             # SQLite with test isolation
-├── network/                # HTTP API and networking
+├── network/                # HTTP API and P2P networking
 │   ├── node.ts                # Hono server with middleware
 │   ├── routes/                # REST API endpoints
 │   │   ├── blocks.ts              # GET /blocks - blockchain retrieval
@@ -118,7 +115,9 @@ src/
 │   │   │   └── mempool.ts            # GET /mempool - view pending transactions
 │   │   └── mine/                  # Mining endpoints  
 │   │       └── mine.ts               # POST /mine - mining with mempool
-│   └── p2p.ts                 # P2P networking (empty file)
+│   ├── p2p.ts                 # P2PNode class with TCP socket server/client
+│   ├── connection.ts          # Connection class for peer management
+│   └── messages.ts            # P2P message protocol definitions
 ├── state/                  # Global application state
 │   ├── singleton.ts           # Shared blockchain instance
 │   └── mempool.ts             # Pending transactions pool
