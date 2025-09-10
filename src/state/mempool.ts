@@ -15,7 +15,7 @@ class Mempool {
   }
 
   clearTransactions() {
-    // TODO: Implement logic to remove only confirmed transactions
+    this.transactions = [];
   }
 }
 
