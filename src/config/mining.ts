@@ -12,8 +12,8 @@ export interface MiningConfig {
 
 export const DEFAULT_MINING_CONFIG: MiningConfig = {
   difficulty: 1,
-  maxNonce: 1000000,
-  targetBlockTime: 10000,
+  maxNonce: 1_000_000,
+  targetBlockTime: 10_000,
 };
 
 export function isHashValid(hash: string, difficulty: number): boolean {
